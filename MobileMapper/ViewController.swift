@@ -65,15 +65,25 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                 }
             }
         }
-        let placemark = currentMapItem.placemark
-        print(placemark)
-        if buttonPressed.buttonType == .detailDisclosure {
+        if buttonPressed.buttonType == .contactAdd {
             if let url = currentMapItem.url {
                 let svc = SFSafariViewController(url: url)
                 present(svc, animated: true, completion: nil)
+                
             }
         } else {
-            mapView.setRegion(initialRegion, animated: true)
+            var description = ""
+            if let phoneNumber = currentMapItem.phoneNumber {
+                description += "Phone number: \(phoneNumber) "
+            }
+            guard let addressNumber = currentMapItem.placemark.subThoroughfare, let addressStreet = currentMapItem.placemark.thoroughfare else {
+                return
+            }
+            description += "Address: \(addressNumber) \(addressStreet) "
+            let alert = UIAlertController(title: "More Info", message: description, preferredStyle: .alert)
+            let okayAction = UIAlertAction(title: "Okay", style: .default, handler: nil)
+            alert.addAction(okayAction)
+            present(alert, animated: true, completion: nil)
             return
         }
     }
@@ -86,7 +96,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     }
     
     @IBAction func whenSearchButtonPressed(_ sender: Any) {
-        var description = ""
         let center = currentLocation.coordinate
         let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
         let region = MKCoordinateRegion(center: center, span: span)
@@ -103,10 +112,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                 let annotation = MKPointAnnotation()
                 annotation.coordinate = mapItem.placemark.coordinate
                 annotation.title = mapItem.name
-                if let phoneNumber = mapItem.phoneNumber {
-                    description += "Phone number: \(phoneNumber)\n"
-                }
-                annotation.subtitle = description
                 self.mapView.addAnnotation(annotation)
                 
             }
