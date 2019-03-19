@@ -18,6 +18,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     var parks: [MKMapItem] = []
     var initialRegion: MKCoordinateRegion!
     var isInitialMapLoad = true
+    @IBOutlet weak var button: UIButton!
+    var descriptionOfPlace: String!
     
     func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
         if isInitialMapLoad {
@@ -34,6 +36,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         mapView.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
+        button.isHidden = true
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -72,18 +75,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                 
             }
         } else {
-            var description = ""
+            descriptionOfPlace = ""
             if let phoneNumber = currentMapItem.phoneNumber {
-                description += "Phone number: \(phoneNumber) "
+                descriptionOfPlace += "Phone number: \(phoneNumber) "
             }
             guard let addressNumber = currentMapItem.placemark.subThoroughfare, let addressStreet = currentMapItem.placemark.thoroughfare else {
                 return
             }
-            description += "Address: \(addressNumber) \(addressStreet) "
-            let alert = UIAlertController(title: "More Info", message: description, preferredStyle: .alert)
-            let okayAction = UIAlertAction(title: "Okay", style: .default, handler: nil)
-            alert.addAction(okayAction)
-            present(alert, animated: true, completion: nil)
+            descriptionOfPlace += "Address: \(addressNumber) \(addressStreet) "
+            performSegue(withIdentifier: "modalSegue", sender: nil)
+//            let alert = UIAlertController(title: "More Info", message: description, preferredStyle: .alert)
+//            let okayAction = UIAlertAction(title: "Okay", style: .default, handler: nil)
+//            alert.addAction(okayAction)
+//            present(alert, animated: true, completion: nil)
             return
         }
     }
@@ -116,6 +120,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                 
             }
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let svc = segue.destination as! SegueViewController
+        svc.descriptionOfPlace = descriptionOfPlace
     }
 }
 

@@ -32,11 +32,21 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="0kW-3u-IZC">
+                        <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" title="Zoom" id="MG7-wA-TxU">
                             <connections>
                                 <action selector="whenZoomButtonPressed:" destination="BYZ-38-t0r" id="VkK-Iy-uqt"/>
                             </connections>
                         </barButtonItem>
+                        <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="DRh-aA-hDT">
+                            <rect key="frame" x="158.5" y="4" width="58" height="36"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <state key="normal" title="Button"/>
+                            <connections>
+                                <segue destination="Hyl-3n-bbU" kind="presentation" identifier="modalSegue" id="ZvY-me-AJ0"/>
+                            </connections>
+                        </button>
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="7Nb-Xj-MwK">
                             <connections>
                                 <action selector="whenSearchButtonPressed:" destination="BYZ-38-t0r" id="ncF-kO-z1D"/>
@@ -44,12 +54,61 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="button" destination="DRh-aA-hDT" id="Y84-yO-Tgg"/>
                         <outlet property="mapView" destination="c6c-2K-SHQ" id="Sgw-GH-XJe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1038" y="-671"/>
+        </scene>
+        <!--Segue View Controller-->
+        <scene sceneID="bq4-3m-N3H">
+            <objects>
+                <viewController id="Hyl-3n-bbU" customClass="SegueViewController" customModule="MobileMapper" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="7N7-rS-aix">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="0Cz-rC-dhK">
+                                <rect key="frame" x="62.5" y="303.5" width="250" height="60"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CuS-Zg-8Td">
+                                        <rect key="frame" x="0.0" y="0.0" width="250" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="250" id="RUW-WJ-FxN"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pvf-yQ-S7J">
+                                        <rect key="frame" x="0.0" y="24" width="250" height="36"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <state key="normal" title="Dismiss"/>
+                                        <connections>
+                                            <action selector="whenDismissButtonPressed:" destination="ocX-0c-m5x" eventType="touchUpInside" id="B3l-JZ-lo5"/>
+                                            <action selector="whenDismissButtonPressed:" destination="Hyl-3n-bbU" eventType="touchUpInside" id="xKr-9d-ff6"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="0Cz-rC-dhK" firstAttribute="centerY" secondItem="7N7-rS-aix" secondAttribute="centerY" id="dwE-sO-gS8"/>
+                            <constraint firstItem="0Cz-rC-dhK" firstAttribute="centerX" secondItem="7N7-rS-aix" secondAttribute="centerX" id="py3-bo-tWg"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="8xO-jE-Ayn"/>
+                    </view>
+                    <connections>
+                        <outlet property="infoLabel" destination="CuS-Zg-8Td" id="1A1-yl-h4c"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PRa-XJ-wzn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="ocX-0c-m5x" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="1783" y="-672"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="k0r-Bo-ZOj">
